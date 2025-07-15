@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Management</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    form input {
+      padding: 8px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: 120px;
+    }
+
+    form button {
+      padding: 8px 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    button.delete {
+      color: red;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Library Management System</h1>
+    
+    <form id="book-form">
+      <input type="text" id="title" placeholder="Book Title" required />
+      <input type="text" id="author" placeholder="Author" required />
+      <input type="text" id="isbn" placeholder="ISBN" required />
+      <button type="submit">Add Book</button>
+    </form>
+
+    <table id="book-list">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Books will be added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('book-form').addEventListener('submit', addBook);
+
+    function addBook(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const isbn = document.getElementById('isbn').value.trim();
+
+      if (title === '' || author === '' || isbn === '') {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      const tableBody = document.querySelector('#book-list tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${author}</td>
+        <td>${isbn}</td>
+        <td><button class="delete">Delete</button></td>
+      `;
+
+      tableBody.appendChild(row);
+
+      document.getElementById('book-form').reset();
+    }
+
+    document.querySelector('#book-list').addEventListener('click', function(e) {
+      if (e.target.classList.contains('delete')) {
+        e.target.parentElement.parentElement.remove();
+      }
+    });
+  </script>
+</body>
+</html>
+
